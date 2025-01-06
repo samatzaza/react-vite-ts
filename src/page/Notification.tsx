@@ -10,7 +10,14 @@ const AppNotif = () => {
 
         notification.open({
             message: 'New Notification!',
-            description: 'You have received a new notification.',
+            description: (
+                <div>
+                    You have received a new notification.{' '}
+                    <a href="/detail" target="_blank" rel="noopener noreferrer">
+                        Click here to visit detail
+                    </a>
+                </div>
+            ),
             icon: <BellOutlined style={{ color: '#108ee9' }} />,
         });
     };
