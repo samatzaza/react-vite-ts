@@ -3,6 +3,8 @@ import Home from './page/Home'
 import About from './page/About'
 import Detail from './page/Detail'
 import AppNotif from './page/Notification'
+import PdfGenerator from './components/pdf'
+import PurchaseOrderForm from './page/PRForm'
 
 function AppRoute() {
     return (
@@ -11,7 +13,10 @@ function AppRoute() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/detail" element={<Detail />} />
-                <Route path="/notification" element={<AppNotif />} />
+                <Route path="/notification" element={<AppNotif />} />PurchaseOrderForm
+                <Route path="/pdf" element={<PdfGenerator />} />
+                <Route path="/pr-form" element={<PurchaseOrderForm />} />
+
             </Routes>
         </div>
     )
