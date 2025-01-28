@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Row, Select, Space, theme } from 'antd';
+import { Product } from '../misc/product';
 
 const { Option } = Select;
 
@@ -8,6 +9,7 @@ const AdvancedSearchForm = () => {
     const { token } = theme.useToken();
     const [form] = Form.useForm();
     const [expand, setExpand] = useState(false);
+    const [product, setProduct] = useState<Product[]>([]);
 
     const formStyle: React.CSSProperties = {
         maxWidth: 'none',

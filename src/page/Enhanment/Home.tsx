@@ -1,5 +1,5 @@
 import React from 'react'
-import TableInput from '../components/TableInput'
+import TableInput from '../../components/TableInput'
 
 const Home = () => {
     return (
