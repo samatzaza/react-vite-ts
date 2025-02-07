@@ -7,6 +7,8 @@ import PdfGenerator from './components/pdf'
 import PurchaseOrderForm from './page/Enhanment/PRForm'
 import GoogleMap from './page/GoogleMap'
 import MyBarChart from './components/graph'
+import Button from './page/button'
+import DataTable from './page/DataTable'
 
 function AppRoute() {
     return (
@@ -20,7 +22,8 @@ function AppRoute() {
                 <Route path="/pr-form" element={<PurchaseOrderForm />} />
                 <Route path="/map" element={<GoogleMap />} />
                 <Route path="/chart" element={<MyBarChart />} />
-
+                <Route path="/button" element={<Button />} />
+                <Route path="/datatable" element={<DataTable />} />
             </Routes>
         </div>
     )
