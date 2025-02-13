@@ -9,6 +9,7 @@ import GoogleMap from './page/GoogleMap'
 import MyBarChart from './components/graph'
 import Button from './page/button'
 import DataTable from './page/DataTable'
+import SearchTable from './page/searchtable'
 
 function AppRoute() {
     return (
@@ -24,6 +25,7 @@ function AppRoute() {
                 <Route path="/chart" element={<MyBarChart />} />
                 <Route path="/button" element={<Button />} />
                 <Route path="/datatable" element={<DataTable />} />
+                <Route path="/searchtable" element={<SearchTable />} />
             </Routes>
         </div>
     )

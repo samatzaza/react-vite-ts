@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { TableProps } from 'antd';
-import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
+import { Form, Input, InputNumber, Modal, Popconfirm, Table, Typography } from 'antd';
 
 interface DataType {
     key: string;
@@ -63,6 +63,8 @@ const Edit: React.FC = () => {
     const [form] = Form.useForm();
     const [data, setData] = useState<DataType[]>(originData);
     const [editingKey, setEditingKey] = useState('');
+    const [editingRecord, setEditingRecord] = useState<DataType | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const isEditing = (record: DataType) => record.key === editingKey;
 
@@ -73,6 +75,30 @@ const Edit: React.FC = () => {
 
     const cancel = () => {
         setEditingKey('');
+    };
+    const handleRowDoubleClick = (record: DataType) => {
+        setEditingRecord(record);
+        form.setFieldsValue(record);
+        setIsModalOpen(true);
+    };
+    const handleSave = async () => {
+        try {
+            const values = await form.validateFields();
+            setData((prevData) =>
+                prevData.map((item) =>
+                    item.key === editingRecord?.key ? { ...item, ...values } : item
+                )
+            );
+            handleCancel();
+        } catch (error) {
+            console.log('Validation Failed:', error);
+        }
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setEditingRecord(null);
+        form.resetFields();
     };
 
     const save = async (key: React.Key) => {
@@ -158,18 +184,38 @@ const Edit: React.FC = () => {
     });
 
     return (
-        <Form form={form} component={false}>
+        <>
             <Table<DataType>
-                components={{
-                    body: { cell: EditableCell },
-                }}
                 bordered
                 dataSource={data}
-                columns={mergedColumns}
+                columns={columns}
                 rowClassName="editable-row"
-                pagination={{ onChange: cancel }}
+                pagination={{ pageSize: 10 }}
+                onRow={(record) => ({
+                    onDoubleClick: () => handleRowDoubleClick(record), // Double-click to open modal
+                })}
             />
-        </Form>
+
+            {/* Modal for Editing */}
+            <Modal
+                title="Edit Record"
+                open={isModalOpen}
+                onOk={handleSave}
+                onCancel={handleCancel}
+            >
+                <Form form={form} layout="vertical">
+                    <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter name!' }]}>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="age" label="Age" rules={[{ required: true, message: 'Please enter age!' }]}>
+                        <InputNumber style={{ width: '100%' }} />
+                    </Form.Item>
+                    <Form.Item name="address" label="Address" rules={[{ required: true, message: 'Please enter address!' }]}>
+                        <Input />
+                    </Form.Item>
+                </Form>
+            </Modal>
+        </>
     );
 };
 
