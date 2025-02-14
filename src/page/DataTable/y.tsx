@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, InputNumber, Modal, Table } from 'antd';
 import type { TableColumnsType } from 'antd';
 import { createStyles } from 'antd-style';
 
@@ -7,6 +7,10 @@ const useStyle = createStyles(({ css, token }) => {
     const antCls = '.ant'; // Explicitly set the Ant Design class prefix
     return {
         customTable: css`
+         ${antCls}-table-thead > tr > th {
+                    background-color: #1890ff; /* Change this to your preferred color */
+                    color: white; /* Adjust text color */
+                }
       ${antCls}-table {
         ${antCls}-table-container {
           ${antCls}-table-body,
@@ -129,17 +133,94 @@ const dataSource = Array.from({ length: 100 }).map<DataType>((_, i) => ({
     gender: 'M',
 }));
 
+// const originData = Array.from({ length: 100 }).map<DataType>((_, i) => ({
+//     key: i.toString(),
+//     name: `Edward ${i}`,
+//     age: 32,
+//     address: `London Park no. ${i}`,
+// }));
+
 const OverflowY: React.FC = () => {
+    const [data, setData] = useState<DataType[]>(dataSource);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingRecord, setEditingRecord] = useState<DataType | null>(null);
+    const [form] = Form.useForm();
+
     const { styles } = useStyle();
+    const [searchText, setSearchText] = useState('');
+
+    const filteredData = data.filter((item) =>
+        Object.values(item).some((value) =>
+            value.toString().toLowerCase().includes(searchText.toLowerCase())
+        )
+    );
+
+    const handleRowDoubleClick = (record: DataType) => {
+        setEditingRecord(record);
+        form.setFieldsValue(record);
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setEditingRecord(null);
+        form.resetFields();
+    };
+
+    const handleSave = async () => {
+        try {
+            const values = await form.validateFields();
+            setData((prevData) =>
+                prevData.map((item) =>
+                    item.key === editingRecord?.key ? { ...item, ...values } : item
+                )
+            );
+            handleCancel();
+        } catch (error) {
+            console.log('Validation Failed:', error);
+        }
+    };
+
     return (
-        <Table<DataType>
-            className={styles.customTable}
-            columns={columns}
-            dataSource={dataSource}
-            bordered
-            size="middle"
-            scroll={{ x: 'calc(700px + 50%)', y: 47 * 5 }}
-        />
+        <div className="min-h-screen"> {/* Ensuring the parent takes full height */}
+            <div className='flex justify-end items-center '>
+                <Input
+                    placeholder="Search by Name, Age, or Address"
+                    allowClear
+                    onChange={(e) => setSearchText(e.target.value)}
+                    style={{ marginBottom: 16, width: 300 }}
+                />
+            </div>
+            <Table<DataType>
+                className={styles.customTable}
+                columns={columns}
+                dataSource={filteredData}
+                bordered
+                size="middle"
+                scroll={{ x: 'calc(1000px + 50%)', y: 'calc(100vh - 120px)' }}
+                onRow={(record) => ({
+                    onDoubleClick: () => handleRowDoubleClick(record), // Double-click to open modal
+                })}
+            />
+            <Modal
+                title="Edit Record"
+                open={isModalOpen}
+                onOk={handleSave}
+                onCancel={handleCancel}
+            >
+                <Form form={form} layout="vertical">
+                    <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter name!' }]}>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="age" label="Age" rules={[{ required: true, message: 'Please enter age!' }]}>
+                        <InputNumber style={{ width: '100%' }} />
+                    </Form.Item>
+                    <Form.Item name="address" label="Address" rules={[{ required: true, message: 'Please enter address!' }]}>
+                        <Input />
+                    </Form.Item>
+                </Form>
+            </Modal>
+        </div>
     );
 };
 

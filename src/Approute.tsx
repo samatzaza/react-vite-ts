@@ -10,22 +10,25 @@ import MyBarChart from './components/graph'
 import Button from './page/button'
 import DataTable from './page/DataTable'
 import SearchTable from './page/searchtable'
+import AntTable from './page/AntTable'
+import MainLayout from './layout/MainLayout'
 
 function AppRoute() {
     return (
         <div>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/detail" element={<Detail />} />
-                <Route path="/notification" element={<AppNotif />} />
-                <Route path="/pdf" element={<PdfGenerator />} />
-                <Route path="/pr-form" element={<PurchaseOrderForm />} />
-                <Route path="/map" element={<GoogleMap />} />
-                <Route path="/chart" element={<MyBarChart />} />
-                <Route path="/button" element={<Button />} />
-                <Route path="/datatable" element={<DataTable />} />
-                <Route path="/searchtable" element={<SearchTable />} />
+                <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+                <Route path="/about" element={<MainLayout><About /></MainLayout>} />
+                <Route path="/detail" element={<MainLayout><Detail /></MainLayout>} />
+                <Route path="/notification" element={<MainLayout><AppNotif /></MainLayout>} />
+                <Route path="/pdf" element={<MainLayout><PdfGenerator /></MainLayout>} />
+                <Route path="/pr-form" element={<MainLayout><PurchaseOrderForm /></MainLayout>} />
+                <Route path="/map" element={<MainLayout><GoogleMap /></MainLayout>} />
+                <Route path="/chart" element={<MainLayout><MyBarChart /></MainLayout>} />
+                <Route path="/button" element={<MainLayout><Button /></MainLayout>} />
+                <Route path="/datatable" element={<MainLayout><DataTable /></MainLayout>} />
+                <Route path="/searchtable" element={<MainLayout><SearchTable /></MainLayout>} />
+                <Route path="/anttable" element={<MainLayout><AntTable /></MainLayout>} />
             </Routes>
         </div>
     )
