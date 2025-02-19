@@ -9,9 +9,10 @@ import GoogleMap from './page/GoogleMap'
 import MyBarChart from './components/graph'
 import Button from './page/button'
 import DataTable from './page/DataTable'
-import SearchTable from './page/searchtable'
+// import SearchTable from './page/searchtable'
 import AntTable from './page/AntTable'
 import MainLayout from './layout/MainLayout'
+import MyChart from './page/Chart'
 
 function AppRoute() {
     return (
@@ -27,8 +28,9 @@ function AppRoute() {
                 <Route path="/chart" element={<MainLayout><MyBarChart /></MainLayout>} />
                 <Route path="/button" element={<MainLayout><Button /></MainLayout>} />
                 <Route path="/datatable" element={<MainLayout><DataTable /></MainLayout>} />
-                <Route path="/searchtable" element={<MainLayout><SearchTable /></MainLayout>} />
+                {/* <Route path="/searchtable" element={<MainLayout><SearchTable /></MainLayout>} /> */}
                 <Route path="/anttable" element={<MainLayout><AntTable /></MainLayout>} />
+                <Route path="/echart" element={<MainLayout><MyChart /></MainLayout>} />
             </Routes>
         </div>
     )
