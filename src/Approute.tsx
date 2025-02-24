@@ -13,6 +13,8 @@ import DataTable from './page/DataTable'
 import AntTable from './page/AntTable'
 import MainLayout from './layout/MainLayout'
 import MyChart from './page/Chart'
+import Status from './page/Status'
+import Details from './page/Detail'
 
 function AppRoute() {
     return (
@@ -31,6 +33,8 @@ function AppRoute() {
                 {/* <Route path="/searchtable" element={<MainLayout><SearchTable /></MainLayout>} /> */}
                 <Route path="/anttable" element={<MainLayout><AntTable /></MainLayout>} />
                 <Route path="/echart" element={<MainLayout><MyChart /></MainLayout>} />
+                <Route path="/status" element={<MainLayout><Status /></MainLayout>} />
+                <Route path="/detail/:id" element={<MainLayout><Details /></MainLayout>} />
             </Routes>
         </div>
     )

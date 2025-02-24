@@ -268,6 +268,56 @@ const TableInput: React.FC = () => {
                             <Input />
                         </Form.Item>
                     </Col>
+                    <Col span={8}>
+                        <Form.Item
+                            label="Customer Name"
+                            name="customerName"
+                        // rules={[{ required: true, message: 'Please input your name' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item
+                            label="Customer Code"
+                            name="customerCode"
+                        // rules={[{ required: true, message: 'Please input your name' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item
+                            label="Customer Phone"
+                            name="customerPhone"
+                        // rules={[{ required: true, message: 'Please input your name' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    {/* <Col span={24}>
+                        <Form.Item
+                            label="Address"
+                            name="address"
+                            labelAlign="left"
+                        // rules={[{ required: true, message: 'Please input your name' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col> */}
+                    <Col span={24}>
+                        <div className="flex items-start">
+                            <div className="min-w-[80px] ml-5 ">Address:</div>
+                            <Form.Item
+                                name="address"
+                                className="w-full"
+                                wrapperCol={{ span: 24 }}
+                            // rules={[{ required: true, message: 'Please input your name' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </div>
+                    </Col>
                 </Row>
             </Form>
             <Modal
@@ -317,11 +367,6 @@ const TableInput: React.FC = () => {
                     Submit
                 </Button>
             </div>
-            {/* <div className='flex justify-end px-5'>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-            </div> */}
         </div>
     );
 };
